@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>InteriorWise | Delhi Interior Cost Calculator</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f7f7f4;
+      color: #18211d;
+      line-height: 1.6;
+    }
+
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid #ddd;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .nav {
+      max-width: 1150px;
+      margin: auto;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .nav a {
+      text-decoration: none;
+      color: #18211d;
+      margin-left: 25px;
+      font-size: 15px;
+    }
+
+    .hero {
+      max-width: 1150px;
+      margin: auto;
+      padding: 80px 24px 55px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 45px;
+      align-items: center;
+    }
+
+    .tag {
+      display: inline-block;
+      background: #e7efe9;
+      color: #245d3d;
+      padding: 7px 13px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: clamp(42px, 6vw, 70px);
+      line-height: 1.02;
+      letter-spacing: -3px;
+      margin-bottom: 22px;
+    }
+
+    .hero p {
+      color: #5d6862;
+      font-size: 18px;
+      max-width: 600px;
+    }
+
+    .calculator {
+      background: #ffffff;
+      padding: 28px;
+      border-radius: 22px;
+      box-shadow: 0 15px 45px rgba(0,0,0,0.08);
+      border: 1px solid #e3e5e2;
+    }
+
+    .calculator h2 {
+      font-size: 25px;
+      margin-bottom: 8px;
+    }
+
+    .calculator > p {
+      color: #68716c;
+      font-size: 14px;
+      margin-bottom: 22px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      font-size: 14px;
+      margin: 17px 0 7px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #d6dad7;
+      border-radius: 10px;
+      font-size: 16px;
+      background: #fff;
+      outline: none;
+    }
+
+    input:focus, select:focus {
+      border-color: #287344;
+    }
+
+    button {
+      width: 100%;
+      border: none;
+      background: #1e6239;
+      color: white;
+      padding: 15px;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 23px;
+    }
+
+    button:hover {
+      background: #174d2d;
+    }
+
+    .result {
+      margin-top: 20px;
+      padding: 20px;
+      background: #eef5f0;
+      border-radius: 13px;
+      display: none;
+    }
+
+    .result small {
+      color: #647169;
+    }
+
+    .price {
+      font-size: 30px;
+      font-weight: 800;
+      color: #1e6239;
+      margin: 4px 0;
+    }
+
+    .section {
+      max-width: 1150px;
+      margin: auto;
+      padding: 65px 24px;
+    }
+
+    .section-title {
+      max-width: 650px;
+      margin-bottom: 30px;
+    }
+
+    .section-title h2 {
+      font-size: 38px;
+      letter-spacing: -1px;
+      margin-bottom: 10px;
+    }
+
+    .section-title p {
+      color: #66706a;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 27px;
+      border-radius: 18px;
+      border: 1px solid #e1e4e1;
+    }
+
+    .card-number {
+      font-size: 13px;
+      color: #1e6239;
+      font-weight: bold;
+      margin-bottom: 14px;
+    }
+
+    .card h3 {
+      margin-bottom: 8px;
+      font-size: 21px;
+    }
+
+    .card p {
+      color: #68716c;
+      font-size: 14px;
+    }
+
+    .trust {
+      background: #18211d;
+      color: white;
+    }
+
+    .trust-inner {
+      max-width: 1150px;
+      margin: auto;
+      padding: 60px 24px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+
+    .trust-item strong {
+      display: block;
+      font-size: 18px;
+      margin-bottom: 5px;
+    }
+
+    .trust-item span {
+      color: #b9c1bc;
+      font-size: 14px;
+    }
+
+    footer {
+      background: #101512;
+      color: #adb6b0;
+      text-align: center;
+      padding: 28px 20px;
+      font-size: 13px;
+    }
+
+    @media (max-width: 800px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding-top: 50px;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .trust-inner {
+        grid-template-columns: 1fr;
+        gap: 22px;
+      }
+
+      .nav a {
+        display: none;
+      }
+
+      h1 {
+        letter-spacing: -2px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="nav">
+    <div class="logo">InteriorWise</div>
+
+    <div>
+      <a href="#calculator">Calculator</a>
+      <a href="#how">How It Works</a>
+      <a href="#about">About</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero">
+
+    <div>
+      <span class="tag">DELHI INTERIOR COST GUIDE</span>
+
+      <h1>
+        Know your interior cost before you start.
+      </h1>
+
+      <p>
+        Get a quick estimate for your home interiors in Delhi.
+        Choose your home size, quality level and scope of work.
+      </p>
+    </div>
+
+    <div class="calculator" id="calculator">
+
+      <h2>Interior Cost Calculator</h2>
+
+      <p>Enter a few details to get an estimated budget.</p>
+
+      <label for="area">Home Area (sq. ft.)</label>
+      <input
+        type="number"
+        id="area"
+        placeholder="Example: 1200"
+        min="100"
+      >
+
+      <label for="quality">Interior Quality</label>
+
+      <select id="quality">
+        <option value="1600">Essential — ₹1,600 / sq.ft.</option>
+        <option value="2100" selected>Premium — ₹2,100 / sq.ft.</option>
+        <option value="2800">Luxury — ₹2,800 / sq.ft.</option>
+      </select>
+
+      <label for="rooms">Scope of Work</label>
+
+      <select id="rooms">
+        <option value="1">Basic interior</option>
+        <option value="1.08" selected>Full home interior</option>
+        <option value="1.18">Full home + custom work</option>
+      </select>
+
+      <button onclick="calculateCost()">
+        Calculate My Estimate
+      </button>
+
+      <div class="result" id="result">
+
+        <small>Estimated interior budget</small>
+
+        <div class="price" id="price">
+          ₹0
+        </div>
+
+        <small id="details"></small>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <section class="section" id="how">
+
+    <div class="section-title">
+      <h2>How InteriorWise works</h2>
+
+      <p>
+        A simple starting point for homeowners who want to
+        understand their approximate interior budget.
+      </p>
+    </div>
+
+    <div class="cards">
+
+      <div class="card">
+        <div class="card-number">01</div>
+
+        <h3>Enter your area</h3>
+
+        <p>
+          Tell us approximately how many square feet your home is.
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="card-number">02</div>
+
+        <h3>Choose your quality</h3>
+
+        <p>
+          Select Essential, Premium or Luxury depending on your
+          material and finish expectations.
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="card-number">03</div>
+
+        <h3>Get an estimate</h3>
+
+        <p>
+          InteriorWise calculates a quick indicative budget for
+          your project.
+        </p>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <section class="trust" id="about">
+
+    <div class="trust-inner">
+
+      <div class="trust-item">
+        <strong>Delhi focused</strong>
+        <span>Designed around Delhi home interior planning.</span>
+      </div>
+
+      <div class="trust-item">
+        <strong>Quick estimate</strong>
+        <span>Get a starting budget in seconds.</span>
+      </div>
+
+      <div class="trust-item">
+        <strong>Plan smarter</strong>
+        <span>Understand your budget before speaking to vendors.</span>
+      </div>
+
+    </div>
+
+  </section>
+
+</main>
+
+
+<footer>
+  © 2026 InteriorWise. Estimates are indicative and may vary by project.
+</footer>
+
+
+<script>
+
+function calculateCost() {
+
+  const area = Number(document.getElementById("area").value);
+  const quality = Number(document.getElementById("quality").value);
+  const scope = Number(document.getElementById("rooms").value);
+
+  if (!area || area < 100) {
+    alert("Please enter a valid home area.");
+    return;
+  }
+
+  const total = area * quality * scope;
+
+  const formatted = new Intl.NumberFormat("en-IN", {
+    style: "currency",
+    currency: "INR",
+    maximumFractionDigits: 0
+  }).format(total);
+
+  document.getElementById("price").textContent = formatted;
+
+  document.getElementById("details").textContent =
+    area + " sq.ft. × ₹" + quality.toLocaleString("en-IN") +
+    " × scope factor";
+
+  document.getElementById("result").style.display = "block";
+}
+
+</script>
+
+</body>
+</html>
